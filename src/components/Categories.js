@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { typesFetchData } from '../actions/types';
+import { categoriesFetchData } from '../actions/categories';
 import {Link} from 'react-router';
 import '../sidebar.css';
 require('react-datagrid/index.css')
@@ -10,11 +10,11 @@ import _ from 'lodash';
 let ReactDataGrid = require('react-datagrid');
 let columns = [];
 let url1 = [];
- class DataGrid extends Component {
+ class Categories extends Component {
 constructor(props){
 
   super(props);
-  url1="http://"+this.props.params.value+".lvh.me:3000/types";
+  url1="http://"+this.props.params.value+".lvh.me:3000/categories";
 console.log("url",url1);
   this.state={
     url: url1,
@@ -63,8 +63,8 @@ console.log("url",url1);
 
 
   render() {
-console.log("in render",this.props.type);
-_.forEach(this.props.type[0],function( value,key){
+console.log("in render",this.props.category);
+_.forEach(this.props.category[0],function( value,key){
   columns.push({name: key});
 })
 
@@ -73,7 +73,7 @@ _.forEach(this.props.type[0],function( value,key){
       <div className="navbar navbar-inverse navbar-fixed-left">
   <a className="navbar-brand" href="#">Brand</a>
   <ul className="nav navbar-nav">
-  <li><Link to={`/category/${this.props.params.value}`}>Categories</Link></li>
+  <li><a href="#">Categories</a></li>
  <li><a href="#">Tasks</a></li>
 </ul>
 </div>
@@ -96,16 +96,16 @@ _.forEach(this.props.type[0],function( value,key){
 }
 const mapStateToProps = (state) => {
     return {
-        type: state.types,
-        hasErrored: state.typesHasErrored,
-        isLoading: state.typesIsLoading
+        category: state.categories,
+        hasErrored: state.categoriesHasErrored,
+        isLoading: state.categoriesIsLoading
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (url) => dispatch(typesFetchData(url))
+        fetchData: (url) => dispatch(categoriesFetchData(url))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);
