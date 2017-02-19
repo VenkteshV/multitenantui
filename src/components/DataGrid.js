@@ -74,7 +74,7 @@ _.forEach(this.props.type[0],function( value,key){
   <a className="navbar-brand" href="#">Brand</a>
   <ul className="nav navbar-nav">
   <li><Link to={`/category/${this.props.params.value}`}>Categories</Link></li>
- <li><a href="#">Tasks</a></li>
+ <li><Link to={`/tasks/${this.props.params.value}`}>Tasks</Link></li>
 </ul>
 </div>
 <div className="container">

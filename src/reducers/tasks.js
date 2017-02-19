@@ -1,9 +1,9 @@
 const defaultState={
   posting: false
 }
-export function categoriesHasErrored(state = false, action) {
+export function tasksHasErrored(state = false, action) {
     switch (action.type) {
-        case 'CATEGORIES_HAS_ERRORED':
+        case 'TASKS_HAS_ERRORED':
             return action.hasErrored;
 
         default:
@@ -11,9 +11,9 @@ export function categoriesHasErrored(state = false, action) {
     }
 }
 
-export function categoriesIsLoading(state = false, action) {
+export function tasksIsLoading(state = false, action) {
     switch (action.type) {
-        case 'CATEGORIES_IS_LOADING':
+        case 'TASKS_IS_LOADING':
             return action.isLoading;
 
         default:
@@ -21,11 +21,11 @@ export function categoriesIsLoading(state = false, action) {
     }
 }
 
-export function categories(state = defaultState, action) {
+export function tasks(state = defaultState, action) {
     switch (action.type) {
-        case 'CATEGORIES_FETCH_DATA_SUCCESS':
-            return action.categories;
-        case "CATEGORIES_POST_DATA": {
+        case 'TASKS_FETCH_DATA_SUCCESS':
+            return action.tasks;
+        case "TASKS_POST_DATA": {
           return {
               ...state,
               posting: true,

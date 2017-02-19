@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { categoriesFetchData } from '../actions/categories';
-import { categoriesPostData } from '../actions/categories';
+import { tasksFetchData } from '../actions/tasks';
+import { tasksPostData } from '../actions/tasks';
 import { Modal, Form, Button, FormGroup } from 'react-bootstrap';
 import {Link} from 'react-router';
 import ReactDOM from 'react-dom';
@@ -14,11 +14,11 @@ let ReactDataGrid = require('react-datagrid');
 let columns = [];
 let url1 = [];
 var details = {};
- class Categories extends Component {
+ class Tasks extends Component {
 constructor(props){
 
   super(props);
-  url1="http://"+this.props.params.value+".lvh.me:3000/categories";
+  url1="http://"+this.props.params.value+".lvh.me:3000/tasks";
 console.log("url",url1);
   this.state={
     url: url1,
@@ -77,9 +77,6 @@ console.log("url",url1);
 
 
 
-  hideListItem() {
-    React.unmountComponentAtNode(document.querySelector('#modal-wrapper'));
-}
 _saveCategory(e) {
 		e.preventDefault();
 
@@ -89,9 +86,10 @@ _saveCategory(e) {
 		// getting data from form
 		details.id = form.find('#id').val();
 
-		details.name = form.find('#name').val();
-		details.description= form.find('#description').val();
-
+		details.description = form.find('#description').val();
+		details.category= form.find('#category').val();
+	details.categories_id= form.find('#categories_id').val()
+  details.rule= form.find('#rule').val()
 details=JSON.stringify(details);
 this.props.postData(this.state.url,details);
 
@@ -110,7 +108,7 @@ _.forEach(this.props.category[0],function( value,key){
   <a className="navbar-brand" href="#">Brand</a>
   <ul className="nav navbar-nav">
   <li><a href="#">Categories</a></li>
- <li><Link to={`/tasks/${this.props.params.value}`}>Tasks</Link></li>
+ <li><a href="#">Tasks</a></li>
 </ul>
 </div>
 <div className="container">
@@ -130,7 +128,7 @@ _.forEach(this.props.category[0],function( value,key){
 </div>
 <Modal title='Modal title' show={this.state.showModal} onHide={this.close}>
 <Modal.Header closeButton>
-<Modal.Title>Add Category</Modal.Title>
+<Modal.Title>Add Task</Modal.Title>
 </Modal.Header>
   <Modal.Body>
   <div>
@@ -140,12 +138,20 @@ _.forEach(this.props.category[0],function( value,key){
 <input type="text" className="form-control" id="id" />
 </div>
 <div className="form-group">
-<label>name</label>
-<input type="text" className="form-control" id="name" />
-</div>
-<div className="form-group">
 <label>description</label>
 <input type="text" className="form-control" id="description" />
+</div>
+<div className="form-group">
+<label>category</label>
+<input type="text" className="form-control" id="category" />
+</div>
+<div className="form-group">
+<label>categories_id</label>
+<input type="text" className="form-control" id="categories_id" />
+</div>
+<div className="form-group">
+<label>rule</label>
+<input type="text" className="form-control" id="rule" />
 </div>
 
 
@@ -154,7 +160,7 @@ _.forEach(this.props.category[0],function( value,key){
 </div>
   </Modal.Body>
     <Modal.Footer>
-<Button bsStyle="primary" onClick={this._saveCategory.bind(this)}>Add categories</Button>
+<Button bsStyle="primary" onClick={this._saveCategory.bind(this)}>Add tasks</Button>
 <Button bsStyle="danger" onClick={this.close.bind(this)}>Cancel</Button>
 </Modal.Footer>
 </Modal>
@@ -167,17 +173,17 @@ _.forEach(this.props.category[0],function( value,key){
 }
 const mapStateToProps = (state) => {
     return {
-        category: state.categories,
-        hasErrored: state.categoriesHasErrored,
-        isLoading: state.categoriesIsLoading
+        category: state.tasks,
+        hasErrored: state.tasksHasErrored,
+        isLoading: state.tasksIsLoading
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (url) => dispatch(categoriesFetchData(url)),
-        postData: (url,details) => dispatch(categoriesPostData(url,details))
+        fetchData: (url) => dispatch(tasksFetchData(url)),
+        postData: (url,details) => dispatch(tasksPostData(url,details))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

@@ -8,6 +8,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import ItemList from './components/ItemList';
 import DataGrid from './components/DataGrid';
 import Categories from './components/Categories';
+import Tasks from './components/Tasks'
 import { Router, browserHistory } from 'react-router';
 
 import './sidebar.css';
@@ -19,6 +20,7 @@ render(
    <Route path="/" component={ItemList} />
     <Route path="/datagrid/:value" component={DataGrid} />
     <Route path="/category/:value" component={Categories} />
+    <Route path="/tasks/:value" component={Tasks} />
  </Router>
     </Provider>,
     document.getElementById('app')

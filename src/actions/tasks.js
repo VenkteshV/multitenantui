@@ -1,33 +1,33 @@
 import $ from 'jquery';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { Observable } from 'rxjs';
-export function categoriesHasErrored(bool) {
+export function tasksHasErrored(bool) {
     return {
-        type: 'CATEGORIES_HAS_ERRORED',
+        type: 'TASKS_HAS_ERRORED',
         hasErrored: bool
     };
 }
 
-export function categoriesIsLoading(bool) {
+export function tasksIsLoading(bool) {
     return {
-        type: 'CATEGORIES_IS_LOADING',
+        type: 'TASKS_IS_LOADING',
         isLoading: bool
     };
 }
 
-export function categoriesFetchDataSuccess(categories) {
+export function tasksFetchDataSuccess(tasks) {
     return {
-        type: 'CATEGORIES_FETCH_DATA_SUCCESS',
-      categories
+        type: 'TASKS_FETCH_DATA_SUCCESS',
+    tasks
     };
 }
-export function postCategory(details) {
+export function postTask(details) {
     return {
-        type: 'CATEGORIES_POST_DATA',
+        type: 'TASKS_POST_DATA',
       details
     };
 }
-export function categoriesPostData(url,details) {
+export function tasksPostData(url,details) {
   console.log(details);
     return (dispatch) => {
 
@@ -45,7 +45,7 @@ export function categoriesPostData(url,details) {
         return response.json()
       }).then(function(body) {
         console.log(body);
-      }).then((details) => dispatch(postCategory(details)));
+      }).then((details) => dispatch(postTask(details)));
 
   return Observable.from(request);
 /*$.ajax({
@@ -66,9 +66,9 @@ export function categoriesPostData(url,details) {
 }
 
 
-export function categoriesFetchData(url) {
+export function tasksFetchData(url) {
     return (dispatch) => {
-        dispatch(categoriesIsLoading(true));
+        dispatch(tasksIsLoading(true));
 
         fetch(url)
             .then((response) => {
@@ -76,12 +76,12 @@ export function categoriesFetchData(url) {
                     throw Error(response.statusText);
                 }
 
-                dispatch(categoriesIsLoading(false));
+                dispatch(tasksIsLoading(false));
 
                 return response;
             })
             .then((response) => response.json())
-            .then((categories) => dispatch(categoriesFetchDataSuccess(categories)))
-            .catch(() => dispatch(categoriesHasErrored(true)));
+            .then((tasks) => dispatch(tasksFetchDataSuccess(tasks)))
+            .catch(() => dispatch(tasksHasErrored(true)));
     };
 }
